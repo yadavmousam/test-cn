@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "test2": {
+    "demoproject": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/test2",
+            "outputPath": "dist/demoproject",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,9 +28,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/glyphicons/glyphicons.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -65,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "test2:build"
+            "browserTarget": "demoproject:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "test2:build:production"
+              "browserTarget": "demoproject:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "test2:build"
+            "browserTarget": "demoproject:build"
           }
         },
         "test": {
@@ -91,12 +94,9 @@
               "src/assets"
             ],
             "styles": [
-              "style.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ]
+            "scripts": []
           }
         },
         "lint": {
@@ -116,19 +116,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "test2:serve"
+            "devServerTarget": "demoproject:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "test2:serve:production"
+              "devServerTarget": "demoproject:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "test2",
+  "defaultProject": "demoproject",
   "cli": {
-    "analytics": "59eb84f9-55b9-4885-98e9-8088e9f138ff"
+    "analytics": "851ed328-f53f-4b48-a5e0-4e4620ad77ff"
   }
 }

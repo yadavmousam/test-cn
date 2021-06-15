@@ -1,103 +1,118 @@
 import { Component } from '@angular/core';
-import { SocialAuthService } from "angularx-social-login";
-import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
-import { SocialUser } from "angularx-social-login";
-import { Router } from '@angular/router';
-import { TokenStorageService } from './service/token-storage.service';
+import { AuthService } from './auth.service';
+import { BlogService } from 'src/app/blog.service';
 
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { AddNewPostComponent } from './add-new-post/add-new-post.component';
+import { EditPostComponent } from './edit-post/edit-post.component';
+import { DeletePostComponent } from './delete-post/delete-post.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+declare var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  title = 'test2';
-  private roles: string[] = [];
-  isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
-  username?: string
-  public user: any= SocialUser
-  loggedIn: boolean=true;
+  title = 'demoproject';
 
-  //  loggedIn:any boolean=true;
-  // constructor(private authService: AuthService) { }
 
-  // signInWithFB(): void {
-  //   this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+
+  // public token : any;
+  // public username:string = ""
+  // public password:string = ""
+ 
+  // postList: any[] = [];
+  // bsModalRef: BsModalRef;
   
-  // } 
-  // signOut(): void {
-  //   this.authService.signOut();
+  // constructor(private formBuilder:FormBuilder,private blogService: BlogService, private bsModalService: BsModalService) {
+  //   // this.getPosts();
   // }
+/**
+ *
+ */
+constructor() {
+  
+  
+}
 
-  // ngOnInit() {
+
+
+  // // getPosts() {
+  // //   this.blogService.getPostList().subscribe(data => {
+  // //     Object.assign(this.postList, data);
+  // //   }, error => {
+  // //     console.log("Error while getting posts ", error);
+  // //   });
+  // // }
+
+  // // addNewPost() {
+  // //   this.bsModalRef = this.bsModalService.show(AddNewPostComponent);
    
-  //   this.authService.authState.subscribe((user) => {
-  //     this.user = user;
-    
-  //     this.loggedIn = (user != null);
-  //   });
+  // //   this.bsModalRef.content.event.subscribe((result:any) => {
+  // //     if (result == 'OK') {
+  // //       this.getPosts();
+  // //     }
+  // //   });
+  // // }
+
+  // // deletePost(postId: number, title: string) {
+  // //   this.bsModalRef = this.bsModalService.show(DeletePostComponent);
+  // //   this.bsModalRef.content.postId = postId;
+  // //   this.bsModalRef.content.title = title;
+  // //   this.bsModalRef.content.event.subscribe((result:any) => {
+  // //     console.log("deleted", result);
+  // //     if (result == 'OK') {
+  // //       setTimeout(() => {
+  // //         this.postList=[];
+  // //         this.getPosts();
+  // //       }, 5000);
+  // //     }
+  // //   });
+  // // }
+
+  // // editPost(postId: number) {
+  // //   this.blogService.changePostId(postId);
+
+  // //   this.bsModalRef = this.bsModalService.show(EditPostComponent);
+  // //   this.bsModalRef.content.event.subscribe((result:any) => {
+  // //     if (result == 'OK') {
+  // //       setTimeout(() => {
+  // //         this.getPosts();
+  // //       }, 5000);
+  // //     }
+  // //   });
   // }
-
-  constructor(private authService: SocialAuthService,private router: Router,private tokenStorageService: TokenStorageService,
-    ) {
-      
-     }
-
-     ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      
-      this.user = user;
-      this.loggedIn = (user != null);
-    });
-
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-
-      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
-      this.username = user.username;
-    }
-
-
-    
-  }
-
-  // signInWithGoogle(): void {
-  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((userData)=>{
-  //     this.user=userData;
-  //   });
-  // }
-
-  // signInWithLinkedin(): void {
-  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((userData)=>{
-  //     this.user=userData;
-  //   });
-  // }
-
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((userData)=>{
-      this.user=userData;
-    });;
-  }
 
  
 
-  refreshToken(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
-  }
-
-  logout(): void {
-    this.tokenStorageService.signOut();
-    window.location.reload();
-  }
-
-
 
 }
+        // Login(){
+        //   this.authService.Authentication(this.username,this.password).subscribe(
+        //     (data)=>{
+             
+        //      if(data!= null){
+        //        // retreive the access token from the server
+        //     // console.log(data["token"])
+        //      // store the token in the localStorage
+              
+        //     //  this.token = data.token;
+        //      localStorage.setItem("access-token",this.token)
+            
+        //      }else{
+        //        console.log("check your credentials !!")
+        //      }
+        //     }
+        //   )
+        // }
+        // DisplayList(){
+        //   this.authService.GetAllProducts().subscribe(
+        //     (data)=>{
+        //        // display list in the console 
+        //           console.log(data)
+        //     }
+        //   )
+        // }
+

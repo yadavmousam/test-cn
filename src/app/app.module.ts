@@ -1,96 +1,113 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
+// used to create fake backend
+import { fakeBackendProvider } from 'src/app/_helpers/fake-backend';
+
+
+import { ErrorInterceptor } from 'src/app/_helpers/error.interceptor';
+
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
-// import { ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-// import { LinkedInLoginProvider} from 'angularx-social-login';
-import {
-  // GoogleLoginProvider,
-  FacebookLoginProvider,
- } from 'angularx-social-login';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { authInterceptorProviders } from 'src/app/helpers/auth.interceptor';
-import {AuthInterceptor} from 'src/app/helpers/auth.interceptor';
-import { ProfileComponent } from './profile/profile.component';
+
+import { FormsModule} from "@angular/forms";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorInterceptor } from 'src/app/interceptor.interceptor';
+import { AuthService } from 'src/app/auth.service';
+import { AuthGuard } from './auth/auth.guard';
+
 import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
-import { ParentComponent } from './parent/parent.component';
-import { ChildComponent } from './child/child.component';
+import { AlertComponent } from './component/alert/alert.component';
+import { LoginComponent } from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatInputModule} from '@angular/material/input';
-import {MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import {MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Login2Component } from './login2/login2.component';
-import { PostListComponent } from './post-list/post-list.component';
+import { AppMaterialModule } from 'src/app/app-material/app-material';
+import { HeaderComponent } from './header/header.component';
+import { InnerhtmlbindingComponent } from './innerhtmlbinding/innerhtmlbinding.component';
+import { BypasssecurityComponent } from './bypasssecurity/bypasssecurity.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { Login1Component } from './login1/login1.component';
+import { CookieService } from 'ngx-cookie-service';
+import { CommonResponse } from 'src/app/common-response'
+import { LoginService } from './service/login.service';
+import {NgcCookieConsentModule, NgcCookieConsentConfig} from 'ngx-cookieconsent';
+import { FooterComponent } from './footer/footer.component';
+import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
+import { BlogService } from 'src/app/blog.service';
+import { ContactService } from 'src/app/service/contact.service';
+import { AddNewPostComponent } from './add-new-post/add-new-post.component';
+import { EditPostComponent } from './edit-post/edit-post.component';
+import { DeletePostComponent } from './delete-post/delete-post.component';
+import { ContactComponent } from './contact/contact.component';
+import { ContactlistComponent } from './contactlist/contactlist.component';
+import {MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog'
 
-
+const cookieConfig:NgcCookieConsentConfig = {
+  cookie: {
+    domain: 'localhost' // or 'your.domain.com' // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
+  },
+  palette: {
+    popup: {
+      background: '#000'
+    },
+    button: {
+      background: '#f1d600'
+    }
+  },
+  theme: 'edgeless',
+  type: 'opt-out'
+};
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    DashboardComponent,
-    RegisterComponent,
-    ProfileComponent,
     HomeComponent,
-    AdminComponent,
-    ParentComponent,
-    ChildComponent,
-    Login2Component,
-    PostListComponent
+    AlertComponent,
+    LoginComponent,
+    HeaderComponent,
+    InnerhtmlbindingComponent,
+    BypasssecurityComponent,
+    DashboardComponent,
+    Login1Component,
+    FooterComponent,
+    AddNewPostComponent,
+    EditPostComponent,
+    DeletePostComponent,
+    ContactComponent,
+    ContactlistComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    SocialLoginModule,
+    
     FormsModule,
-    BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MatInputModule,
     MatIconModule,
+    MatDialogModule,
     MatFormFieldModule,
-    
-   
+    AppMaterialModule,
+    ModalModule.forRoot()
   ],
   providers: [
-    
-    authInterceptorProviders,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-  },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          
-          // {
-          //   id: GoogleLoginProvider.PROVIDER_ID,
-          //   provider: new GoogleLoginProvider(
-          //     '699613072714-1mtfh70geqh7e1kh8hv7rqslgnbbcbna.apps.googleusercontent.com'
-              
-          //   )
-          // },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('767824720770238')
-          },
-        ]
-      } as SocialAuthServiceConfig,
-    }
-
-    
-
+    AuthService,AuthGuard,CookieService,LoginService,BlogService, BsModalService,ContactService,
+    // { provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: [] },   
+    // provider used to create fake backend
+    fakeBackendProvider  
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[AddNewPostComponent, DeletePostComponent, EditPostComponent,ContactComponent]
+
 })
 export class AppModule { }

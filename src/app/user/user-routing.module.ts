@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CreateComponent } from './pages/create/create.component';
-import { EditComponent } from './pages/edit/edit.component';
-import { ListComponent } from './pages/list/list.component';
+import { AddEditComponent } from './add-edit/add-edit.component';
+import { LayoutComponent } from './layout/layout.component';
+import { ListComponent } from './list/list.component';
+
 const routes: Routes = [
-   {
-        
-        children: [
-            { path: '', component: ListComponent },
-            { path: 'create', component: CreateComponent },
-            { path: 'edit/:id', component: EditComponent }
-        ]
-    }
+  {
+    path: '', component: LayoutComponent,
+    children: [
+        { path: '', component: ListComponent },
+        { path: 'add', component: AddEditComponent },
+        { path: 'edit/:id', component: AddEditComponent }
+    ]
+}
 ];
 
 @NgModule({

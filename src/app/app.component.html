@@ -1,83 +1,57 @@
 
-<!-- nav -->
-<div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">bezKoder</a>
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/home" class="nav-link" routerLink="home">Home </a>
-      </li>
-      <li class="nav-item">
-        <a href="/logins" class="nav-link" routerLink="logins">Login2</a>
-      </li>
-      <li class="nav-item">
-        <a   href="/user" class="nav-link" routerLink="/user" routerLinkActive="active">Users</a>
-      </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
-      </li>
-      <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
-      </li>
-      <!-- <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
-      </li> -->
-    </ul>
 
-    <ul class="navbar-nav ml-auto" >
-      <li class="nav-item">
-        <a href="/parent" class="nav-link" routerLink="parent" routerLinkActive="active">Parent</a>
-      </li>
-      <li class="nav-item">
-        <a href="/child" class="nav-link" routerLink="child">Child</a>
-      </li>
-      <li class="nav-item">
-        <a href="/customers" class="nav-link" routerLink="customers">Customers</a>
-      </li>
-      <li class="nav-item">
-        <a href="/productlist" class="nav-link" routerLink="productlist">ProductList</a>
-      </li>
-    </ul>
 
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
+ <app-header></app-header>
+<!-- <div class="app-container bg-light"> -->
+    <router-outlet></router-outlet>
+    <app-footer></app-footer> 
+<!-- </div> -->
 
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-  </nav>
+ <!-- <div class="container">
+    <div class="row">
+      <div class="col-md-6" style="text-align:center;">
+        <h3>CRUD Operation in Angular with TypeScript</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <span (click)="addNewPost()" class="btn btn-primary btn-xs">Add New Post</span>
+        <br /><br />
+        <div class="table-responsive">
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th>Post Id</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Create Date</th>            
+              <th>Edit</th>
+              <th>Delete</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of postList">
+                <td>{{item.postId}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.categoryName}}</td>              
+                <td>{{item.createdDate | date}}</td> 
+                <td><span class="btn btn-primary btn-xs" (click)="editPost(item.postId)">
+                    <span class="glyphicon glyphicon-pencil"></span></span></td>
+                <td><span class="btn btn-danger btn-xs" (click)="deletePost(item.postId, item.title)">
+                    <span class="glyphicon glyphicon-trash"></span></span></td>
+              </tr>
+            </tbody>
+          </table>
+  
+        </div>
+      </div>
+    </div>
+  </div>  -->
 
-<div class="container-fluid">
-  <div class="row" style="text-align: center;">
-<div class="md-col-12">
-  <h3><p>Social Login</p></h3>
-  <button class="btn btn-primary" style="background-color: blue; border-color: cadetblue;" (click)="signInWithFB()"><i clas="fa fa-facsbook">Login with Facebook</i> </button><br>
-  <!-- <button class="btn btn-primary" style="background-color: blue; border-color: cadetblue;" (click)="signInWithGoogle()"><i clas="fa fa-facsbook">Login with Google</i> </button>  -->
-  <!-- <button class="btn btn-primary" style="background-color: blue; border-color: cadetblue;" (click)="signInWithFB()"><i clas="fa fa-facsbook">Login with linkedin</i> </button> -->
-</div>
-<div class="md-col-12" style="text-align: center;">
-  <div class="card" style="width: 20rem; margin: 20px 0 24px 0; text-align: center;">   
-  <!-- <img [src]="user.photoUrl" alt="image" style="width: 20px; border-radius: 50%; margin-top:20px;"> -->
-  <div class="card-body">
-   <h4 class="card-title">{{user.name}}</h4>
-   <p class="card-text">{{user.email}}</p>
-  </div>
-  </div>
-</div>
-  </div>
-</div>
+ 
+  
+ 
+  
+  
 
-<!-- <button routerLink="/customers">Customers</button> -->
-<!-- <app-parent></app-parent> -->
-<router-outlet></router-outlet>
+

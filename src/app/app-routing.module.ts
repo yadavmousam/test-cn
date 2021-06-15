@@ -1,39 +1,31 @@
 import { NgModule } from '@angular/core';
+// import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from 'src/app/service/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
-import { ProfileComponent } from './profile/profile.component';
-import { HomeComponent } from './home/home.component'
+import { HomeComponent } from './home';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { AdminComponent } from './admin/admin.component';
-import { ParentComponent } from './parent/parent.component';
-import { ChildComponent } from './child/child.component';
-import { Login2Component } from './login2/login2.component';
-// const usersModule = () => import('./user/user.module').then(m => m.UserModule);
-import { PostListComponent } from './post-list/post-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ContactComponent } from './contact/contact.component';
+import { Login1Component } from './login1/login1.component';
+import { InnerhtmlbindingComponent } from './innerhtmlbinding/innerhtmlbinding.component';
+import { BypasssecurityComponent } from './bypasssecurity/bypasssecurity.component';
+const usersModule = () => import('./user/user.module').then(x => x.UserModule)
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  {
-    path: 'customers',
-    loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule)
-  },
-
-  {
-    path: 'user',
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
-  },
-  // { path: 'user', loadChildren: usersModule },
-  { path: 'home', component: HomeComponent },
+//  { path: '', component: Login1Component },
+//   { path: 'logins', component: Login1Component },
+ 
+   { path: '', component: HomeComponent },
+   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'user', loadChildren: usersModule },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'parent', component: ParentComponent },
-  { path: 'child', component: ChildComponent },
-  { path: 'logins', component: Login2Component },
-  { path: 'productlist', component: PostListComponent },
-
-  
+  { path: 'logins', component: Login1Component },
+  { path: '', component: ContactComponent },
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'innerhtml', component: InnerhtmlbindingComponent },
+  { path: 'bypasssecurity', component: BypasssecurityComponent },
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

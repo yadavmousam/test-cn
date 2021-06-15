@@ -1,56 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators,FormControl,FormArray } from '@angular/forms';
-import { UserService } from 'src/app/service/user.service';
-import { AuthService } from 'src/app/service/auth.service';
-import { TokenStorageService } from 'src/app/service/token-storage.service';
+import {FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+
+import { AuthService } from './../auth/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
-    form: any = {
-        username: null,
-        password: null
-      };
-      isLoggedIn = false;
-      isLoginFailed = false;
-      errorMessage = '';
-      roles: string[] = [];
-    
-      constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
-    
-      ngOnInit(): void {
-        if (this.tokenStorage.getToken()) {
-          this.isLoggedIn = true;
-          this.roles = this.tokenStorage.getUser().roles;
-        }
-      }
-     
-      onSubmit(): void {
-        const { username, password } = this.form;
-    
-        this.authService.login(username, password).subscribe(
-          data => {
-           this.tokenStorage.saveToken(data.accessToken);
-            this.tokenStorage.saveUser(data);
-    
-            this.isLoginFailed = false;
-            this.isLoggedIn = true;
-            this.roles = this.tokenStorage.getUser().roles;
-            this.reloadPage();
-          },
-          err => {
-            this.errorMessage = err.error.message;
-            this.isLoginFailed = true;
-          }
-        );
-      }
-    
-      reloadPage(): void {
-        window.location.reload();
-      }  
-  
+export class LoginComponent  {
+  form:any= FormGroup;
+   formSubmitAttempt: boolean;
 
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      userName: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  isFieldInvalid(field: string) {
+    return (
+      (!this.form.get(field).valid && this.form.get(field).touched) ||
+      (this.form.get(field).untouched && this.formSubmitAttempt)
+    );
+ 
+    }
+    onSubmit() {
+      if (this.form.valid) {
+        this.authService.login(this.form.value);
+      }
+      console.log(this.form.value)
+      this.formSubmitAttempt = true;
+    }
 }

@@ -1,17 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
-/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'bootstrap/dist/css/bootstrap.css';
 
-/* .container {
-    display: flex;
-    flex-direction: row;
+.toolbar{
+  background-color: rgb(145, 145, 241);
+  border-radius: 5px;
+  color: white;
 }
 
-router-outlet + *  {
-    padding: 0 16px;
-} */
+.toolbar-spacer{
+  flex: 1  1 auto;
+}
+a { cursor: pointer }
 
-  /* Button */
-  /* .button, button {
+.app-container {
+    min-height: 320px;
+    overflow: hidden;
+}
+
+.btn-delete-user {
+    width: 40px;
+    text-align: center;
+    box-sizing: content-box;
+}
+
+
+
+/* Button */
+.button, button {
     display: inline-flex;
     align-items: center;
     padding: 8px 16px;
@@ -31,10 +49,10 @@ router-outlet + *  {
   .button:disabled, button:disabled {
     opacity: 0.5;
     cursor: auto;
-  } */
+  }
 
   /* Fancy Button */
-/* 
+
   .fancy-button {
     background-color: white;
     color: #1976d2;
@@ -43,4 +61,14 @@ router-outlet + *  {
   .fancy-button i.material-icons {
     color: #1976d2;
     padding-right: 4px;
-  } */
+  }
+
+  footer{
+    background-color: rgb(127, 236, 255);
+  }
+
+  header{
+    background-color: blue;
+  }
+
+  
